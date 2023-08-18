@@ -2,7 +2,7 @@
 
 A simple flutter app to visualize sample api data
 
-![app screenshot]('./assets/images/demo.png')
+![app screenshot](./assets/images/demo.png)
 
 ## Getting Started
 
