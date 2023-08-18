@@ -1,6 +1,8 @@
-# the_brand_demo
+# The_Brand_Demo
 
-A new Flutter project.
+A simple flutter app to visualize sample api data
+
+![app screenshot]('./assets/images/demo.png')
 
 ## Getting Started
 
