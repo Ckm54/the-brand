@@ -20,15 +20,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -133,11 +131,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 250,
                             width: double.infinity,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 16.0,
+                              ),
                               child: Text(
                                 responseData.description,
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 16),
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
                             ))
                       ],
@@ -151,21 +155,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 16.0),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4.0),
                             child: Text(
-                              "Recent Posts",
-                              style: TextStyle(
+                              'Recent Posts (${responseData.posts.length})',
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
+                          Divider(
+                            height: 1,
+                            color: Colors.blue[400],
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
                           // posts from api
                           Posts(posts: responseData.posts),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
