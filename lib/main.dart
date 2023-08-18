@@ -37,11 +37,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late Future<Response> apiResponseData;
   late Image coverImage;
+  late Image defaultImage;
 
   @override
   void initState() {
     super.initState();
     coverImage = Image.asset(AppImages.coverImage);
+    defaultImage = Image.asset(AppImages.defaultImage);
     apiResponseData = TheBrandApi().fetchResponseData();
   }
 
@@ -68,92 +70,103 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             body: SingleChildScrollView(
               child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: <Widget>[
-                          Container(
-                            height: 250,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: const AssetImage(
-                                  'assets/images/cover.jpg',
-                                ),
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.3),
-                                    BlendMode.darken),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          height: 250,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: const AssetImage(
+                                'assets/images/cover.jpg',
                               ),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10),
-                              ),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.3),
+                                  BlendMode.darken),
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
                             ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.white,
-                                  ),
-                                  color: Colors.white60,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              alignment: Alignment.topLeft,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 16.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.white,
                                 ),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 4.0, horizontal: 6.0),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: FittedBox(
-                                      child: Text(
-                                        "🔥 New posts update",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                                color: Colors.white60,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4.0, horizontal: 6.0),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: FittedBox(
+                                    child: Text(
+                                      "🔥 New posts update",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                            alignment: Alignment.center,
+                            height: 250,
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                responseData.description,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              "Recent Posts",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                          Container(
-                              alignment: Alignment.center,
-                              height: 250,
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  responseData.description,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 16),
-                                ),
-                              ))
+                          // posts from api
+                          Posts(posts: responseData.posts),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      const Text(
-                        "Recent Posts",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Posts(posts: responseData.posts),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),
